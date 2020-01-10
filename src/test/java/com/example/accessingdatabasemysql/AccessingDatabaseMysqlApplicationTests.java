@@ -2,8 +2,11 @@ package com.example.accessingdatabasemysql;
 
 import com.example.accessingdatabasemysql.controller.MainController;
 import com.example.accessingdatabasemysql.entity.User;
-import org.junit.jupiter.api.Test;
+
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.*;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AccessingDatabaseMysqlApplicationTests {
+public class AccessingDatabaseMysqlApplicationTests extends AbstractTestNGSpringContextTests {
 
 	/* host */
 	@Value("${access.host}")
@@ -29,15 +32,34 @@ class AccessingDatabaseMysqlApplicationTests {
 	@LocalServerPort
 	private int port;
 
-
 	@Autowired
 	private TestRestTemplate restTemplate;
 
 	@Autowired
 	private MainController controller;
 
+	@BeforeSuite
+	public void beforeSuite() {
+		System.out.println("AccessingDatabaseMysqlApplicationTests -- @BeforeSuite--------------------");
+	}
+
+	@AfterSuite
+	public void afterSuite() {
+		System.out.println("AccessingDatabaseMysqlApplicationTests -- @AfterSuite--------------------\n");
+	}
+
+	@BeforeTest
+	public void beforeTest() {
+		System.out.println("AccessingDatabaseMysqlApplicationTests -- @BeforeTest----------");
+	}
+
+	@AfterTest
+	public void afterTest() {
+		System.out.println("AccessingDatabaseMysqlApplicationTests -- @AfterTest----------\n");
+	}
+
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 		assertThat(controller).isNotNull();
 	}
 
